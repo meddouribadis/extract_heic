@@ -2,15 +2,14 @@ const { app, BrowserWindow } = require('electron')
 
 function createWindow () {
   // Cree la fenetre du navigateur.
-  const win = new BrowserWindow({
+   const win = new BrowserWindow({
     width: 800,
     height: 600,
     webPreferences: {
       nodeIntegration: true
     }
   })
-  win.loadFile('index.html')
-  win = null
+  win.loadFile('index.html') 
 }
 
 // Cette méthode sera appelée quant Electron aura fini

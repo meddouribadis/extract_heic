@@ -1,15 +1,43 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
-    <title>Hello World!</title>
-    <!-- https://electronjs.org/docs/tutorial/security#csp-meta-tag -->
-    <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    We are using node <script>document.write(process.versions.node)</script>,
-    Chrome <script>document.write(process.versions.chrome)</script>,
-    and Electron <script>document.write(process.versions.electron)</script>.
-  </body>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heic to Jpeg converter</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script defer src="render.js"></script>
+</head>
+<body>
+    <h1>Welcome !</h1>
+    <hr>
+    <div class="file has-name">
+        <label class="file-label">
+          <input id="filePath" class="file-input" type="file" name="resume">
+          <span class="file-cta">
+            <span class="file-icon">
+              <i class="fas fa-upload"></i>
+            </span>
+            <span class="file-label">
+              Choose a file…
+            </span>
+          </span>
+          <span id="fileName" class="file-name">
+            ...
+          </span>
+        </label>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <input id="themeNameBtn" class="input" type="text" placeholder="Theme Name">
+        </div>
+      </div>
+
+      <hr>
+      <div id="holder">
+        Drag your file here
+      </div>
+</body>
 </html>
