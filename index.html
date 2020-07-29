@@ -9,34 +9,53 @@
     <link rel="stylesheet" href="style.css">
     <script defer src="render.js"></script>
 </head>
+
 <body>
-    <h1>Welcome !</h1>
-    <hr>
-    <div class="file has-name">
-        <label class="file-label">
-          <input id="filePath" class="file-input" type="file" name="resume" accept=".heic">
-          <span class="file-cta">
-            <span class="file-icon">
-              <i class="fas fa-upload"></i>
-            </span>
-            <span class="file-label">
-              Choose a file…
-            </span>
-          </span>
-          <span id="fileName" class="file-name">
-            ...
-          </span>
-        </label>
-      </div>
-
-      <div class="field">
-        <div class="control">
-          <input id="themeNameBtn" class="input" type="text" placeholder="Theme Name">
+    <div class="container">
+        <div class="notification">
+            <h1>Heic Extractor 🖤</h1>
         </div>
-      </div>
+    </div>
 
-      <hr>
-      <button id="btnProcess" disabled class="button is-primary">Convert</button>
+    <section class="hero">
+        <div class="hero-body">
+          <div class="container">
+            <h1 class="title">
+                1. Select or drag and drop your .heic file
+            </h1>
+
+            <div class="file has-name">
+                <label class="file-label">
+                  <input id="filePath" class="file-input" type="file" name="resume" accept=".heic">
+                  <span class="file-cta">
+                    <span class="file-icon">
+                      <i class="fas fa-upload"></i>
+                    </span>
+                    <span class="file-label">
+                      Choose a file…
+                    </span>
+                  </span>
+                  <span id="fileName" class="file-name">
+                    ...
+                  </span>
+                </label>
+            </div>
+            <hr>
+            <h1 class="title">
+                2. Name your theme
+            </h1>
+
+            <div class="field">
+                <div class="control">
+                  <input id="themeNameBtn" class="input" type="text" placeholder="Theme Name">
+                </div>
+            </div>
+
+            <hr>
+            <button id="btnProcess" disabled class="button is-primary">Convert</button>
+          </div>
+        </div>
+      </section>
 
 </body>
 </html>

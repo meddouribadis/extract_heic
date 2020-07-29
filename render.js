@@ -1,4 +1,7 @@
 const { desktopCapturer } = require("electron")
+const { promisify } = require('util');
+const fs = require('fs');
+const convert = require('heic-convert');
 
 const fileUpload = document.getElementById('filePath');
 const fileName = document.getElementById('fileName');
@@ -33,3 +36,24 @@ fileUpload.onchange = () => {
         console.log(fileUpload.files[0].path);
     }
 }
+
+// Buttons
+processBtn.onclick = () => {
+    console.log("Process Start" + filePath);
+    processFile(filePath);
+}
+
+// Process the file
+async function processFile(filePath) {
+    const inputBuffer = await promisify(fs.readFile)(filePath);
+    const images = await convert.all({
+      buffer: inputBuffer, // the HEIC file buffer
+      format: 'JPEG'       // output format
+    });
+   
+    for (let idx in images) {
+      const image = images[idx];
+      const outputBuffer = await image.convert();
+      await promisify(fs.writeFile)(`./output/result-${idx}.jpg`, outputBuffer);
+    }
+};
