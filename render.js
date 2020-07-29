@@ -104,5 +104,8 @@ async function processFile(filePath) {
       const outputBuffer = await image.convert();
       await promisify(fs.writeFile)(`./output/${themeName}/${themeName}_${parseInt(idx)+1}.jpg`, outputBuffer);
     }
+
+    let data = JSON.stringify(defaultConfig);
+    fs.writeFileSync('./output/'+themeName+'/theme.json', data);
     
 };
