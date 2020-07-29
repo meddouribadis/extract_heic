@@ -1,4 +1,3 @@
-const { desktopCapturer } = require("electron")
 const { promisify } = require('util');
 const fs = require('fs');
 const convert = require('heic-convert');
@@ -7,6 +6,8 @@ const fileUpload = document.getElementById('filePath');
 const fileName = document.getElementById('fileName');
 const themeNameBtn = document.getElementById('themeNameBtn');
 const processBtn = document.getElementById('btnProcess');
+const dissapearWarning = document.getElementById('dissapearWarning');
+
 let filePath = null;
 let themeName = null;
 
@@ -15,11 +16,16 @@ document.addEventListener('drop', (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    filePath = e.dataTransfer.files[0].path;
-    fileName.innerText = e.dataTransfer.files[0].name;
-    processBtn.disabled = false;
-    for (const f of e.dataTransfer.files) {
-        console.log('File(s) you dragged here: ', f.path)
+    if(e.dataTransfer.files[0].type === "image/heic"){
+        filePath = e.dataTransfer.files[0].path;
+        fileName.innerText = e.dataTransfer.files[0].name;
+        processBtn.disabled = false;
+        for (const f of e.dataTransfer.files) {
+            console.log('File(s) you dragged here: ', f.path)
+        }
+    }
+    else {
+        document.getElementById('warningMessage').classList.remove(["dissapear"]);
     }
 });
 
@@ -41,6 +47,10 @@ fileUpload.onchange = () => {
 processBtn.onclick = () => {
     console.log("Process Start" + filePath);
     processFile(filePath);
+}
+
+dissapearWarning.onclick = () => {
+    document.getElementById('warningMessage').classList.add(["dissapear"]);
 }
 
 // Process the file

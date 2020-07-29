@@ -1,0 +1,15 @@
+.warningmsg {
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 10%;
+    margin-right: auto;
+    margin-left: auto;
+    min-height: 10em;
+    width: 90%;
+    box-shadow: 0px 0px 16px 0px #7b7b7b;
+}
+
+.dissapear {
+    display:none;
+}
