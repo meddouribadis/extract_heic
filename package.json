@@ -2,8 +2,9 @@
   "name": "extract_heic",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
+    "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -13,5 +14,11 @@
     "jpg"
   ],
   "author": "Badis MEDDOURI",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "heic-convert": "^1.2.2"
+  },
+  "devDependencies": {
+    "electron": "^9.1.2"
+  }
 }
