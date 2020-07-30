@@ -33,6 +33,13 @@ let defaultConfig = {
     ]
 };
 
+// Initial dir
+fs.mkdir(path.join(app.getPath('userData'), "output"), (err) => {
+    if (err) {
+        return console.error(err);
+    }
+});
+
 // File Upload
 document.addEventListener('drop', (e) => {
     e.preventDefault();
@@ -99,12 +106,6 @@ gitLink.onclick = () => {
 
 // Process the file
 async function processFile(filePath) {
-    fs.mkdir(path.join(app.getPath('userData'), "output"), (err) => {
-        if (err) {
-            return console.error(err);
-        }
-    });
-
     fs.mkdir(path.join(app.getPath('userData')+"/output", themeName), (err) => {
         if (err) {
             return console.error(err);
