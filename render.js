@@ -1,3 +1,5 @@
+const { shell, remote } = require('electron');
+const app = remote.app;
 const { promisify } = require('util');
 const fs = require('fs');
 const path = require('path'); 
@@ -9,6 +11,7 @@ const themeNameBtn = document.getElementById('themeNameBtn');
 const processBtn = document.getElementById('btnProcess');
 const dissapearWarning = document.getElementById('dissapearWarning');
 const dissapearSuccess = document.getElementById('dissapearSuccess');
+const gitLink = document.getElementById('gitLink');
 
 let filePath = null;
 let themeName = null;
@@ -83,15 +86,21 @@ dissapearSuccess.onclick = () => {
     document.getElementById('successMessage').classList.add(["dissapear"]);
 }
 
+// Links
+gitLink.onclick = () => {
+    shell.openExternal('https://github.com/meddouribadis')
+}
+
+
 // Process the file
 async function processFile(filePath) {
-    fs.mkdir(path.join(__dirname, "output"), (err) => {
+    fs.mkdir(path.join(app.getPath('userData'), "output"), (err) => {
         if (err) {
             return console.error(err);
         }
     });
 
-    fs.mkdir(path.join(__dirname+"/output", themeName), (err) => {
+    fs.mkdir(path.join(app.getPath('userData')+"/output", themeName), (err) => {
         if (err) {
             return console.error(err);
         }
@@ -109,12 +118,12 @@ async function processFile(filePath) {
         for (let idx in images) {
             const image = images[idx];
             const outputBuffer = await image.convert();
-            await promisify(fs.writeFile)(`./output/${themeName}/${themeName}_${parseInt(idx)+1}.jpg`, outputBuffer);
+            await promisify(fs.writeFile)(path.join(app.getPath('userData'), "output", themeName, `${themeName}_${parseInt(idx)+1}.jpg`), outputBuffer);
         }
     });
 
     defaultConfig.imageFilename = themeName+"_*.jpg";
     let data = JSON.stringify(defaultConfig);
-    fs.writeFileSync('./output/'+themeName+'/theme.json', data);
+    fs.writeFileSync(path.join(app.getPath('userData'), "output", themeName, "theme.json"), data);
     
 };
