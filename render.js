@@ -27,7 +27,7 @@ let defaultConfig = {
     "nightImageList": [
         4
     ]
-  };
+};
 
 // File Upload
 document.addEventListener('drop', (e) => {
