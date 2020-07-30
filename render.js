@@ -34,7 +34,7 @@ document.addEventListener('drop', (e) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if(e.dataTransfer.files[0].type === "image/heic"){
+    if(e.dataTransfer.files[0].type === "image/heic" || path.extname(e.dataTransfer.files[0].path) === ".heic"){
         filePath = e.dataTransfer.files[0].path;
         fileName.innerText = e.dataTransfer.files[0].name;
         processBtn.disabled = false;
@@ -68,7 +68,8 @@ themeNameBtn.onkeyup = () => {
 
 // Buttons
 processBtn.onclick = () => {
-    console.log("Process Start" + filePath);
+    console.log("Process Started : " + filePath);
+
     processFile(filePath).then(() => {
         document.getElementById('successMessage').classList.remove(["dissapear"]);
       });
@@ -84,27 +85,35 @@ dissapearSuccess.onclick = () => {
 
 // Process the file
 async function processFile(filePath) {
-    const inputBuffer = await promisify(fs.readFile)(filePath);
-    const images = await convert.all({
-      buffer: inputBuffer,
-      format: 'JPEG'
+    fs.mkdir(path.join(__dirname, "output"), (err) => {
+        if (err) {
+            return console.error(err);
+        }
     });
 
-    defaultConfig.imageFilename = themeName+"_*.jpg"
+    fs.mkdir(path.join(__dirname+"/output", themeName), (err) => {
+        if (err) {
+            return console.error(err);
+        }
+        console.log('Directory created successfully!');
+    });
 
-    fs.mkdir(path.join(__dirname+"/output", themeName), (err) => { 
-        if (err) { 
-            return console.error(err); 
-        } 
-        console.log('Directory created successfully!'); 
-    }); 
-   
-    for (let idx in images) {
-      const image = images[idx];
-      const outputBuffer = await image.convert();
-      await promisify(fs.writeFile)(`./output/${themeName}/${themeName}_${parseInt(idx)+1}.jpg`, outputBuffer);
-    }
+    fs.readFile(filePath, async function (err, data) {
+        if (err) throw err;
+        const inputBuffer = data;
+        const images = await convert.all({
+            buffer: inputBuffer,
+            format: 'JPEG'
+        });
 
+        for (let idx in images) {
+            const image = images[idx];
+            const outputBuffer = await image.convert();
+            await promisify(fs.writeFile)(`./output/${themeName}/${themeName}_${parseInt(idx)+1}.jpg`, outputBuffer);
+        }
+    });
+
+    defaultConfig.imageFilename = themeName+"_*.jpg";
     let data = JSON.stringify(defaultConfig);
     fs.writeFileSync('./output/'+themeName+'/theme.json', data);
     
