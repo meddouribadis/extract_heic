@@ -9,6 +9,7 @@ const fileUpload = document.getElementById('filePath');
 const fileName = document.getElementById('fileName');
 const themeNameBtn = document.getElementById('themeNameBtn');
 const processBtn = document.getElementById('btnProcess');
+const openDirBtn = document.getElementById('btnOpenFolder');
 const dissapearWarning = document.getElementById('dissapearWarning');
 const dissapearSuccess = document.getElementById('dissapearSuccess');
 const gitLink = document.getElementById('gitLink');
@@ -75,7 +76,11 @@ processBtn.onclick = () => {
 
     processFile(filePath).then(() => {
         document.getElementById('successMessage').classList.remove(["dissapear"]);
-      });
+    });
+}
+
+openDirBtn.onclick = () => {
+    shell.openPath(path.join(app.getPath('userData'), "output"));
 }
 
 dissapearWarning.onclick = () => {
