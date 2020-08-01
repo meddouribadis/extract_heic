@@ -80,9 +80,9 @@ themeNameBtn.onkeyup = () => {
 // Buttons
 processBtn.onclick = () => {
     console.log("Process Started : " + filePath);
-
+    processBtn.innerText = "Loading...";
     processFile(filePath).then(() => {
-        document.getElementById('successMessage').classList.remove(["dissapear"]);
+        //document.getElementById('successMessage').classList.remove(["dissapear"]);
     });
 }
 
@@ -126,10 +126,13 @@ async function processFile(filePath) {
             const outputBuffer = await image.convert();
             await promisify(fs.writeFile)(path.join(app.getPath('userData'), "output", themeName, `${themeName}_${parseInt(idx)+1}.jpg`), outputBuffer);
         }
+
+        document.getElementById('successMessage').classList.remove(["dissapear"]);
+        processBtn.innerText = "Convert";
     });
 
     defaultConfig.imageFilename = themeName+"_*.jpg";
     let data = JSON.stringify(defaultConfig);
-    fs.writeFileSync(path.join(app.getPath('userData'), "output", themeName, "theme.json"), data);
+    fs.writeFileSync(path.join(app.getPath('userData'), "output", themeName, themeName+".json"), data);
     
 };
