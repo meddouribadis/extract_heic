@@ -1,4 +1,8 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
+
+global.sharedObject = {
+    themeName: null,
+}
 
 function createWindow () {
    const win = new BrowserWindow({
@@ -8,7 +12,7 @@ function createWindow () {
       nodeIntegration: true
     }
   })
-  win.loadFile('index.html') 
+  win.loadFile('./src/index.html')
 }
 app.whenReady().then(createWindow)
 

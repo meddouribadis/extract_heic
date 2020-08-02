@@ -75,6 +75,7 @@ fileUpload.onchange = () => {
 // Inputs
 themeNameBtn.onkeyup = () => {
     themeName = themeNameBtn.value;
+    remote.getGlobal('sharedObject').themeName = themeName;
 }
 
 // Buttons
