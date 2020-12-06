@@ -5,6 +5,19 @@ const path = require('path');
 const regex = /(?<=\_)(.*?)(?=\.jpg)/gm;
 const fileList = {}
 
+let defaultConfig = {
+    "imageFilename": "Catalina_*.jpg",
+    "imageCredits": "Apple",
+    "sunriseImageList": [
+    ],
+    "dayImageList": [
+    ],
+    "sunsetImageList": [
+    ],
+    "nightImageList": [
+    ]
+};
+
 // HTML elements
 const imageGallery = document.getElementById('imageGallery');
 const processBtn = document.getElementById('btnProcess');
@@ -73,12 +86,35 @@ function checkSelectValues() {
 }
 
 function generateJson() {
-    // TO DO: Generate json function
-    console.log("I generate json");
+    defaultConfig.imageFilename = remote.getGlobal('sharedObject').themeName+"_*.jpg";
+    for(let key in fileList) {
+        switch (fileList[key].value) {
+            case 'day':
+                defaultConfig.dayImageList.push(key);
+                break;
+            case 'sunrise':
+                defaultConfig.sunriseImageList.push(key);
+                break;
+            case 'sunset':
+                defaultConfig.sunsetImageList.push(key);
+                break;
+            case 'night':
+                defaultConfig.nightImageList.push(key);
+                break;
+            default:
+                console.log(`Sorry, we are out of ${fileList[key].value}.`);
+        }
+    }
+
+    console.log(defaultConfig);
+    let data = JSON.stringify(defaultConfig);
+    fs.writeFileSync(path.join(app.getPath('userData'), "output", remote.getGlobal('sharedObject').themeName, remote.getGlobal('sharedObject').themeName+".json"), data);
+
 }
 
 processBtn.onclick = () => {
-    if(checkSelectValues() === true) console.log("it's okay");
+    if(checkSelectValues() === true) generateJson();
+
 }
 
 readImages(path.join(app.getPath('userData'), "output", remote.getGlobal('sharedObject').themeName));
