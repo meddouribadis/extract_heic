@@ -7,11 +7,13 @@ const fileList = {}
 
 // HTML elements
 const imageGallery = document.getElementById('imageGallery');
+const processBtn = document.getElementById('btnProcess');
 
+// Functions
 function handleChangeSelect(e) {
-    console.log(fileList);
     const { name, value } = e.target;
     fileList[name].value = value;
+    if(checkSelectValues() === true) processBtn.disabled = false;
 }
 
 async function readImages(dirPath) {
@@ -45,7 +47,7 @@ async function fillGallery(){
             '    <option value="sunrise">Sunrise</option>\n' +
             '    <option value="day">Day</option>\n' +
             '    <option value="sunset">Sunset</option>\n' +
-            '    <option value="night">Nigh</option>\n' +
+            '    <option value="night">Night</option>\n' +
             '    </select>';
 
         let selectType = document.createElement('div'); selectType.classList.add("select","mt-1");
@@ -61,6 +63,22 @@ async function fillGallery(){
         column.appendChild(selectType);
         imageGallery.appendChild(column);
     }
+}
+
+function checkSelectValues() {
+    for(let key in fileList) {
+        if(fileList[key].value === undefined) return false;
+    }
+    return true;
+}
+
+function generateJson() {
+    // TO DO: Generate json function
+    console.log("I generate json");
+}
+
+processBtn.onclick = () => {
+    if(checkSelectValues() === true) console.log("it's okay");
 }
 
 readImages(path.join(app.getPath('userData'), "output", remote.getGlobal('sharedObject').themeName));
