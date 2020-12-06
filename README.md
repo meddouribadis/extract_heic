@@ -14,12 +14,12 @@ A small software that converts a Mac OS Dynamic Wallpaper into a dynamic wallpap
 
 ## Usage
 
-![/demo/](./demo/demo_1.jpg)
-
 1. Just run the software
 2. Select or drag and drop your `.heic` file
 3. Name your theme for WDD
-4. That's all, enjoy your theme on the `./output` folder
+4. Click on the **Convert** button
+5. That's all, open the theme folder and import the `.json` file to WinDynamicDesktop
+6. You can edit a theme (images orders) using the **Tweak Theme** button
 
 ![Usage](http://g.recordit.co/z5YaGH13Qm.gif)
 
